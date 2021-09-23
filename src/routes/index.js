@@ -5,6 +5,7 @@ router.route("/").get((req,res)=>{
 })
 
 router.route("/location").post((req,res)=>{
+    console.log(req.headers)
     console.log(req.body)
     res.sendStatus(200);
 })
